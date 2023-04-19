@@ -2,7 +2,7 @@
 <form action="?/createSession" method="POST">
 	<div class="data-div">
 		<label for="accName">Account Name:</label>
-		<input type="text" id="accName" name="accName" />
+		<input type="text" id="accName" name="accName" required />
 	</div>
 	<div class="data-div">
 		<label for="sessionID">SessionID:</label>
