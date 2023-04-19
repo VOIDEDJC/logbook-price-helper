@@ -1,3 +1,10 @@
+<script lang="ts">
+	import type { PageData } from './$types';
+	export let data: PageData;
+
+	$: ({ userSession, tft } = data);
+</script>
+
 <h1>Logbook Pricer</h1>
 <form action="?/createSession" method="POST">
 	<div class="data-div">

@@ -3,6 +3,17 @@ import { prisma } from '$lib/server/prisma';
 import { fail } from '@sveltejs/kit';
 import bcrypt from 'bcrypt';
 
+export const load: PageServerLoad = async () => {
+	const res = await fetch(
+		'https://raw.githubusercontent.com/The-Forbidden-Trove/tft-data-prices/master/lsc/bulk-expedition.json'
+	);
+	const tft = await res.json();
+	return {
+		userSession: await prisma.session.findMany(),
+		tft: tft
+	};
+};
+
 export const actions: Actions = {
 	createSession: async ({ request }) => {
 		let { accName, sessionID, league, stashIndex } = Object.fromEntries(
@@ -11,7 +22,7 @@ export const actions: Actions = {
 			accName: string;
 			sessionID: string;
 			league: string;
-			stashIndex: number;
+			stashIndex: string;
 		};
 		try {
 			let count = await prisma.session.count({});
@@ -21,7 +32,7 @@ export const actions: Actions = {
 			await prisma.session.create({
 				data: {
 					accName: accName,
-					sessionID: sessionID,
+					sessionID: await bcrypt.hash(sessionID, 10),
 					league: league,
 					stashIndex: stashIndex
 				}
