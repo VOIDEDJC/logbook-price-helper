@@ -11,12 +11,19 @@ export const load: PageServerLoad = async () => {
 	);
 	const tft = await res.json();
 	console.log(tft);
+	const opts = {
+		headers: {
+			cookie: `POESESSID=${userSession[0].sessionID}`
+		}
+	};
 	const res2 = await fetch(
-		`https://www.pathofexile.com/character-window/get-stash-items?accountName=${userSession[0].accName}}&realm=pc&league=${userSession[0].league}}&tabIndex=${userSession[0].stashIndex}`
+		`https://www.pathofexile.com/character-window/get-stash-items?accountName=${userSession[0].accName}&realm=pc&league=${userSession[0].league}&tabIndex=${userSession[0].stashIndex}`,
+		opts
 	);
 	if (res2.status == 200) {
 		stashData = await res2.json();
 	}
+	console.log(stashData);
 	return {
 		userSession: userSession,
 		tft: tft,

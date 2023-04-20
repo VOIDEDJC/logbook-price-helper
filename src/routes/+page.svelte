@@ -5,7 +5,6 @@
 	$: ({ userSession, tft } = data);
 </script>
 
-<h1>Logbook Pricing Tool</h1>
 <div class="content">
 	<form action="?/createSession" method="POST">
 		Add or Renew your Session:
@@ -54,7 +53,6 @@
 		background-color: #222;
 		display: flex;
 		flex-direction: column;
-		min-height: 100vh;
 	}
 	.content {
 		display: flex;
