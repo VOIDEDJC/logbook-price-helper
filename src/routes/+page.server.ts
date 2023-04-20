@@ -70,18 +70,14 @@ export const actions: Actions = {
 	}
 };
 export async function _storeStashData(stashData: any) {
-	console.log(stashData.items.length);
 	let sunCount = 0;
 	let scytheCount = 0;
 	let chaliceCount = 0;
 	let circleCount = 0;
 	for (var i = 0; i < stashData.items.length; i++) {
 		let item = stashData.items[i];
-		//console.log(item);
 		if (item.baseType.toString() == 'Expedition Logbook') {
-			console.log(item);
 			for (var j = 0; j < item.logbookMods.length; j++) {
-				console.log(item.logbookMods[j].faction.name);
 				switch (item.logbookMods[j].faction.name) {
 					case 'Knights of the Sun':
 						sunCount++;
@@ -99,7 +95,7 @@ export async function _storeStashData(stashData: any) {
 			}
 		}
 	}
-	console.log(sunCount + ' ' + scytheCount + ' ' + circleCount + ' ' + chaliceCount);
+
 	await prisma.session.update({
 		data: {
 			sunCount: sunCount,
