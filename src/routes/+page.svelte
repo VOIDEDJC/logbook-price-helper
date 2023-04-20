@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resourceLimits } from 'worker_threads';
 	import type { PageData } from './$types';
 	export let data: PageData;
 
@@ -26,7 +27,7 @@
 		</div>
 		<div><button type="submit">Add or Renew Session</button></div>
 	</form>
-	<div class="current-prices">
+	<div class="price-container">
 		Current Prices:
 		<div class="logbook-row">
 			<div>{tft.data[4].name}</div>
@@ -45,6 +46,12 @@
 			<div>{tft.data[7].chaos}c</div>
 		</div>
 	</div>
+	<div class="logbook-container">
+		Your Logbooks:
+		<form action="?/fetchStashData" method="POST">
+			<button type="submit">Fetch Stash Data</button>
+		</form>
+	</div>
 </div>
 
 <style>
@@ -59,7 +66,7 @@
 		flex-direction: row;
 		color: #fff;
 	}
-	.current-prices {
+	.price-container {
 		display: flex;
 		flex-direction: column;
 		padding: 16px;
@@ -71,6 +78,13 @@
 		flex-direction: row;
 		justify-content: space-between;
 		margin-top: 10px;
+	}
+	.logbook-container {
+		display: flex;
+		flex-direction: column;
+		padding: 16px;
+		max-width: 7%;
+		min-width: 15rem;
 	}
 	form {
 		background-color: #222;

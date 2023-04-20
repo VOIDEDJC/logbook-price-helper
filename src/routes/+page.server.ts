@@ -1,33 +1,17 @@
 import type { Actions, PageServerLoad } from './$types';
 import { prisma } from '$lib/server/prisma';
-import { fail } from '@sveltejs/kit';
-import bcrypt from 'bcrypt';
+import { fail, redirect } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async () => {
 	const userSession = await prisma.session.findMany();
-	var stashData;
 	const res = await fetch(
 		'https://raw.githubusercontent.com/The-Forbidden-Trove/tft-data-prices/master/lsc/bulk-expedition.json'
 	);
 	const tft = await res.json();
-	console.log(tft);
-	const opts = {
-		headers: {
-			cookie: `POESESSID=${userSession[0].sessionID}`
-		}
-	};
-	const res2 = await fetch(
-		`https://www.pathofexile.com/character-window/get-stash-items?accountName=${userSession[0].accName}&realm=pc&league=${userSession[0].league}&tabIndex=${userSession[0].stashIndex}`,
-		opts
-	);
-	if (res2.status == 200) {
-		stashData = await res2.json();
-	}
-	console.log(stashData);
 	return {
 		userSession: userSession,
-		tft: tft,
-		stashData: stashData
+		tft: tft
+		//stashData: stashData
 	};
 };
 
@@ -56,10 +40,33 @@ export const actions: Actions = {
 			});
 		} catch (err) {
 			console.error(err);
-			return fail(500, { message: 'Could not create the Session.' });
+			return fail(500, { message: 'Could not save the Session.' });
 		}
 		return {
 			status: 201
+		};
+	},
+	fetchStashData: async ({ request }) => {
+		let session = await prisma.session.findMany();
+
+		const opts = {
+			headers: {
+				cookie: `POESESSID=${session[0].sessionID}`
+			}
+		};
+		const res = await fetch(
+			`https://www.pathofexile.com/character-window/get-stash-items?accountName=${session[0].accName}&realm=pc&league=${session[0].league}&tabIndex=${session[0].stashIndex}`,
+			opts
+		);
+		if (res.status == 200) {
+			const stashData = await res.json();
+			return {
+				status: 200
+			};
+		}
+		return {
+			status: 500,
+			message: 'Could not fetch stash data'
 		};
 	}
 };
