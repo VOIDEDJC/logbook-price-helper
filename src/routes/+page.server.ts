@@ -70,38 +70,40 @@ export const actions: Actions = {
 	}
 };
 export async function _storeStashData(stashData: any) {
-	let sunCount = 0;
-	let scytheCount = 0;
-	let chaliceCount = 0;
-	let circleCount = 0;
+	let factionCount = [0, 0, 0, 0];
+	let bestFaction;
 	for (var i = 0; i < stashData.items.length; i++) {
 		let item = stashData.items[i];
 		if (item.baseType.toString() == 'Expedition Logbook') {
+			bestFaction = [0, 0, 0, 0];
 			for (var j = 0; j < item.logbookMods.length; j++) {
 				switch (item.logbookMods[j].faction.name) {
 					case 'Knights of the Sun':
-						sunCount++;
+						bestFaction[0]++;
 						break;
 					case 'Black Scythe Mercenaries':
-						scytheCount++;
-						break;
-					case 'Druids of the Broken Circle':
-						circleCount++;
+						bestFaction[1]++;
 						break;
 					case 'Order of the Chalice':
-						chaliceCount++;
+						bestFaction[2]++;
+						break;
+					case 'Druids of the Broken Circle':
+						bestFaction[3]++;
 						break;
 				}
 			}
+			factionCount[bestFaction.indexOf(Math.max(...bestFaction))]++;
+
+			//factionCount[bestFaction.findIndex((count, index) => index !== 0 && count === Math.max(...bestFaction.slice(1)))]++;
 		}
 	}
 
 	await prisma.session.update({
 		data: {
-			sunCount: sunCount,
-			scytheCount: scytheCount,
-			circleCount: circleCount,
-			chaliceCount: chaliceCount
+			sunCount: factionCount[0],
+			scytheCount: factionCount[1],
+			chaliceCount: factionCount[2],
+			circleCount: factionCount[3]
 		},
 		where: {
 			id: 1
