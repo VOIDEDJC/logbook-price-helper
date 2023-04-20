@@ -6,56 +6,58 @@
 </script>
 
 <div class="content">
-	<form action="?/createSession" method="POST">
-		Add or Renew your Session:
-		<div class="data-div">
-			<label for="accName">Account Name:</label>
-			{#if userSession}
-				<input type="text" id="accName" name="accName" value={userSession.accName} required />
-			{:else}
-				<input type="text" id="accName" name="accName" required />
-			{/if}
-		</div>
-		<div class="data-div">
-			<label for="sessionID">SessionID:</label>
-			{#if userSession}
-				<input
-					type="password"
-					id="sessionID"
-					name="sessionID"
-					value={userSession.sessionID}
-					required
-				/>
-			{:else}
-				<input type="password" id="sessionID" name="sessionID" required />
-			{/if}
-		</div>
-		<div class="data-div">
-			<label for="league">League:</label>
-			{#if userSession}
-				<input type="text" id="league" name="league" value={userSession.league} required />
-			{:else}
-				<input type="text" id="league" name="league" required />
-			{/if}
-		</div>
-		<div class="data-div">
-			<label for="stashIndex">stashIndex:</label>
-			{#if userSession}
-				<input
-					type="number"
-					id="stashIndex"
-					name="stashIndex"
-					value={userSession.stashIndex}
-					required
-				/>
-			{:else}
-				<input type="number" id="stashIndex" name="stashIndex" required />
-			{/if}
-		</div>
-		<div><button type="submit">Add or Renew Session</button></div>
-	</form>
+	<div class="input-container">
+		<form action="?/createSession" method="POST">
+			Add or Renew your Session:
+			<div class="data-div">
+				<label for="accName">Account Name:</label>
+				{#if userSession}
+					<input type="text" id="accName" name="accName" value={userSession.accName} required />
+				{:else}
+					<input type="text" id="accName" name="accName" required />
+				{/if}
+			</div>
+			<div class="data-div">
+				<label for="sessionID">SessionID:</label>
+				{#if userSession}
+					<input
+						type="password"
+						id="sessionID"
+						name="sessionID"
+						value={userSession.sessionID}
+						required
+					/>
+				{:else}
+					<input type="password" id="sessionID" name="sessionID" required />
+				{/if}
+			</div>
+			<div class="data-div">
+				<label for="league">League:</label>
+				{#if userSession}
+					<input type="text" id="league" name="league" value={userSession.league} required />
+				{:else}
+					<input type="text" id="league" name="league" required />
+				{/if}
+			</div>
+			<div class="data-div">
+				<label for="stashIndex">stashIndex:</label>
+				{#if userSession}
+					<input
+						type="number"
+						id="stashIndex"
+						name="stashIndex"
+						value={userSession.stashIndex}
+						required
+					/>
+				{:else}
+					<input type="number" id="stashIndex" name="stashIndex" required />
+				{/if}
+			</div>
+			<div><button type="submit">Add or Renew Session</button></div>
+		</form>
+	</div>
 	<div class="price-container">
-		Current Prices:
+		Current TFT Prices:
 		<div class="logbook-row">
 			<div>{tft.data[4].name}</div>
 			<div>{tft.data[4].chaos}c</div>
@@ -74,14 +76,33 @@
 		</div>
 	</div>
 	<div class="logbook-container">
-		Your Logbooks:
-		<div class="logbook-row">{userSession?.sunCount}x Knights of the Sun</div>
-		<div class="logbook-row">{userSession?.scytheCount}x Black Scythe Mercenaries</div>
-		<div class="logbook-row">{userSession?.chaliceCount}x Order of the Chalice</div>
-		<div class="logbook-row">{userSession?.circleCount}x Druids of the Broken Circle</div>
-		<form action="?/fetchStashData" method="POST">
-			<button type="submit">Fetch Stash Data</button>
-		</form>
+		<div class="logbook-col">
+			{#if userSession}
+				Your Logbooks:
+				<div class="logbook-row">{userSession?.sunCount}x Knights of the Sun</div>
+				<div class="logbook-row">{userSession?.scytheCount}x Black Scythe Mercenaries</div>
+				<div class="logbook-row">{userSession?.chaliceCount}x Order of the Chalice</div>
+				<div class="logbook-row">{userSession?.circleCount}x Druids of the Broken Circle</div>
+
+				<form action="?/fetchStashData" method="POST">
+					<button type="submit">Fetch Stash Data</button>
+				</form>{/if}
+		</div>
+		<div class="logbook-col">
+			{#if userSession}
+				Values:
+				<div class="logbook-row">{userSession.sunCount * tft.data[4].chaos}c</div>
+				<div class="logbook-row">{userSession.scytheCount * tft.data[5].chaos}c</div>
+				<div class="logbook-row">{userSession.chaliceCount * tft.data[6].chaos}c</div>
+				<div class="logbook-row">{userSession.circleCount * tft.data[7].chaos}c</div>
+				<div class="logbook-row total-value-row">
+					Total Value: {userSession.sunCount * tft.data[4].chaos +
+						userSession.scytheCount * tft.data[5].chaos +
+						userSession.chaliceCount * tft.data[6].chaos +
+						userSession.circleCount * tft.data[7].chaos}c
+				</div>
+			{/if}
+		</div>
 	</div>
 </div>
 
@@ -101,6 +122,7 @@
 		display: flex;
 		flex-direction: column;
 		padding: 16px;
+		padding-left: 10rem;
 		max-width: 7%;
 		min-width: 15rem;
 	}
@@ -109,16 +131,23 @@
 		flex-direction: row;
 		justify-content: space-between;
 		margin-top: 10px;
+		padding-left: 10px;
+	}
+	.total-value-row {
+		padding-left: 0px;
+		font-weight: bold;
+		padding-top: 0.7rem;
 	}
 	.logbook-container {
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
+		justify-content: space-between;
 		padding: 16px;
-		max-width: 7%;
-		min-width: 15rem;
+		padding-left: 10rem;
+		max-width: 10%;
+		min-width: 25rem;
 	}
-	form {
-		background-color: #222;
+	.input-container {
 		min-width: 30rem;
 		padding: 16px;
 		display: flex;
