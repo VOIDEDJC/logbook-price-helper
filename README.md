@@ -5,6 +5,8 @@ Node is required to run this project
 ```bash
 npm i
 
+npx prisma db push
+
 npm run dev -- --open
 ```
 
