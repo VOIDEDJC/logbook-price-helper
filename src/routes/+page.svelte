@@ -5,11 +5,11 @@
 	$: ({ userSession, tft } = data);
 </script>
 
-<h1>Logbook Pricer</h1>
+<h1>Logbook Pricing Tool</h1>
 <form action="?/createSession" method="POST">
 	<div class="data-div">
 		<label for="accName">Account Name:</label>
-		<input type="text" id="accName" name="accName" required />
+		<input type="text" id="accName" name="accName" value={userSession[0].accName} required />
 	</div>
 	<div class="data-div">
 		<label for="sessionID">SessionID:</label>
@@ -17,11 +17,11 @@
 	</div>
 	<div class="data-div">
 		<label for="league">League:</label>
-		<input type="text" id="league" name="league" />
+		<input type="text" id="league" name="league" value={userSession[0].league} />
 	</div>
 	<div class="data-div">
 		<label for="stashIndex">stashIndex:</label>
-		<input type="number" id="stashIndex" name="stashIndex" />
+		<input type="number" id="stashIndex" name="stashIndex" value={userSession[0].stashIndex} />
 	</div>
 	<div><button type="submit">Add or Renew Session</button></div>
 </form>
