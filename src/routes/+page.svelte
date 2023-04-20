@@ -6,36 +6,69 @@
 </script>
 
 <h1>Logbook Pricing Tool</h1>
-<form action="?/createSession" method="POST">
-	<div class="data-div">
-		<label for="accName">Account Name:</label>
-		<input type="text" id="accName" name="accName" value={userSession[0].accName} required />
+<div class="content">
+	<form action="?/createSession" method="POST">
+		Add or Renew your Session:
+		<div class="data-div">
+			<label for="accName">Account Name:</label>
+			<input type="text" id="accName" name="accName" value={userSession[0].accName} required />
+		</div>
+		<div class="data-div">
+			<label for="sessionID">SessionID:</label>
+			<input type="password" id="sessionID" name="sessionID" />
+		</div>
+		<div class="data-div">
+			<label for="league">League:</label>
+			<input type="text" id="league" name="league" value={userSession[0].league} />
+		</div>
+		<div class="data-div">
+			<label for="stashIndex">stashIndex:</label>
+			<input type="number" id="stashIndex" name="stashIndex" value={userSession[0].stashIndex} />
+		</div>
+		<div><button type="submit">Add or Renew Session</button></div>
+	</form>
+	<div class="current-prices">
+		Current Prices:
+		<div class="logbook-row">
+			<div>{tft.data[4].name}</div>
+			<div>{tft.data[4].chaos}c</div>
+		</div>
+		<div class="logbook-row">
+			<div>{tft.data[5].name}</div>
+			<div>{tft.data[5].chaos}c</div>
+		</div>
+		<div class="logbook-row">
+			<div>{tft.data[6].name}</div>
+			<div>{tft.data[6].chaos}c</div>
+		</div>
+		<div class="logbook-row">
+			<div>{tft.data[7].name}</div>
+			<div>{tft.data[7].chaos}c</div>
+		</div>
 	</div>
-	<div class="data-div">
-		<label for="sessionID">SessionID:</label>
-		<input type="password" id="sessionID" name="sessionID" />
-	</div>
-	<div class="data-div">
-		<label for="league">League:</label>
-		<input type="text" id="league" name="league" value={userSession[0].league} />
-	</div>
-	<div class="data-div">
-		<label for="stashIndex">stashIndex:</label>
-		<input type="number" id="stashIndex" name="stashIndex" value={userSession[0].stashIndex} />
-	</div>
-	<div><button type="submit">Add or Renew Session</button></div>
-</form>
+</div>
 
 <style>
 	:global(body) {
 		font-family: sans-serif;
-		background-color: #333;
+		background-color: #222;
 		display: flex;
 		flex-direction: column;
-		background-color: gray;
 		min-height: 100vh;
 	}
-	.data-div {
+	.content {
+		display: flex;
+		flex-direction: row;
+		color: #fff;
+	}
+	.current-prices {
+		display: flex;
+		flex-direction: column;
+		padding: 16px;
+		max-width: 7%;
+		min-width: 15rem;
+	}
+	.logbook-row {
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
@@ -45,10 +78,15 @@
 		background-color: #222;
 		min-width: 30rem;
 		padding: 16px;
-		color: #fff;
 		display: flex;
 		flex-direction: column;
 		max-width: 7%;
+	}
+	.data-div {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		margin-top: 10px;
 	}
 	label {
 		padding-top: 15px;
