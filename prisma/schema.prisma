@@ -11,8 +11,18 @@ datasource db {
 }
 
 model session {
-  accName String @unique
-  sessionID String
-  league String
-  stashIndex String
+  id Int @unique @default(1)
+  accName String @default("")
+  sessionID String @default("")
+  league String @default("")
+  stashIndex String @default("")
+  sunCount Int @default(0)
+  scytheCount Int @default(0)
+  chaliceCount Int @default(0)
+  circleCount Int @default(0)
+  sunPrice Int @default(0)
+  scytheValue Int @default(0)
+  chaliceValue Int @default(0)
+  circleValue Int @default(0)
+  totalValue Int @default(0)
 }

@@ -3,15 +3,13 @@ import { prisma } from '$lib/server/prisma';
 import { fail, redirect } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async () => {
-	const userSession = await prisma.session.findMany();
 	const res = await fetch(
 		'https://raw.githubusercontent.com/The-Forbidden-Trove/tft-data-prices/master/lsc/bulk-expedition.json'
 	);
 	const tft = await res.json();
 	return {
-		userSession: userSession,
+		userSession: await prisma.session.findFirst(),
 		tft: tft
-		//stashData: stashData
 	};
 };
 
@@ -60,6 +58,7 @@ export const actions: Actions = {
 		);
 		if (res.status == 200) {
 			const stashData = await res.json();
+			await _storeStashData(stashData);
 			return {
 				status: 200
 			};
@@ -70,3 +69,46 @@ export const actions: Actions = {
 		};
 	}
 };
+export async function _storeStashData(stashData: any) {
+	console.log(stashData.items.length);
+	let sunCount = 0;
+	let scytheCount = 0;
+	let chaliceCount = 0;
+	let circleCount = 0;
+	for (var i = 0; i < stashData.items.length; i++) {
+		let item = stashData.items[i];
+		//console.log(item);
+		if (item.baseType.toString() == 'Expedition Logbook') {
+			console.log(item);
+			for (var j = 0; j < item.logbookMods.length; j++) {
+				console.log(item.logbookMods[j].faction.name);
+				switch (item.logbookMods[j].faction.name) {
+					case 'Knights of the Sun':
+						sunCount++;
+						break;
+					case 'Black Scythe Mercenaries':
+						scytheCount++;
+						break;
+					case 'Druids of the Broken Circle':
+						circleCount++;
+						break;
+					case 'Order of the Chalice':
+						chaliceCount++;
+						break;
+				}
+			}
+		}
+	}
+	console.log(sunCount + ' ' + scytheCount + ' ' + circleCount + ' ' + chaliceCount);
+	await prisma.session.update({
+		data: {
+			sunCount: sunCount,
+			scytheCount: scytheCount,
+			circleCount: circleCount,
+			chaliceCount: chaliceCount
+		},
+		where: {
+			id: 1
+		}
+	});
+}

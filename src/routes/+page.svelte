@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { resourceLimits } from 'worker_threads';
 	import type { PageData } from './$types';
 	export let data: PageData;
 
@@ -11,19 +10,47 @@
 		Add or Renew your Session:
 		<div class="data-div">
 			<label for="accName">Account Name:</label>
-			<input type="text" id="accName" name="accName" value={userSession[0].accName} required />
+			{#if userSession}
+				<input type="text" id="accName" name="accName" value={userSession.accName} required />
+			{:else}
+				<input type="text" id="accName" name="accName" required />
+			{/if}
 		</div>
 		<div class="data-div">
 			<label for="sessionID">SessionID:</label>
-			<input type="password" id="sessionID" name="sessionID" />
+			{#if userSession}
+				<input
+					type="password"
+					id="sessionID"
+					name="sessionID"
+					value={userSession.sessionID}
+					required
+				/>
+			{:else}
+				<input type="password" id="sessionID" name="sessionID" required />
+			{/if}
 		</div>
 		<div class="data-div">
 			<label for="league">League:</label>
-			<input type="text" id="league" name="league" value={userSession[0].league} />
+			{#if userSession}
+				<input type="text" id="league" name="league" value={userSession.league} required />
+			{:else}
+				<input type="text" id="league" name="league" required />
+			{/if}
 		</div>
 		<div class="data-div">
 			<label for="stashIndex">stashIndex:</label>
-			<input type="number" id="stashIndex" name="stashIndex" value={userSession[0].stashIndex} />
+			{#if userSession}
+				<input
+					type="number"
+					id="stashIndex"
+					name="stashIndex"
+					value={userSession.stashIndex}
+					required
+				/>
+			{:else}
+				<input type="number" id="stashIndex" name="stashIndex" required />
+			{/if}
 		</div>
 		<div><button type="submit">Add or Renew Session</button></div>
 	</form>
