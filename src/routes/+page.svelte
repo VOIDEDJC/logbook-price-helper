@@ -79,10 +79,10 @@
 		<div class="logbook-col">
 			{#if userSession}
 				Your Logbooks:
-				<div class="logbook-row">{userSession?.sunCount}x Knights of the Sun</div>
-				<div class="logbook-row">{userSession?.scytheCount}x Black Scythe Mercenaries</div>
-				<div class="logbook-row">{userSession?.chaliceCount}x Order of the Chalice</div>
-				<div class="logbook-row">{userSession?.circleCount}x Druids of the Broken Circle</div>
+				<div class="logbook-row">{userSession.sunCount}x Knights of the Sun</div>
+				<div class="logbook-row">{userSession.scytheCount}x Black Scythe Mercenaries</div>
+				<div class="logbook-row">{userSession.chaliceCount}x Order of the Chalice</div>
+				<div class="logbook-row">{userSession.circleCount}x Druids of the Broken Circle</div>
 
 				<form action="?/fetchStashData" method="POST">
 					<button type="submit">Fetch Stash Data</button>

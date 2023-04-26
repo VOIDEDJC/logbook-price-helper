@@ -24,11 +24,9 @@
 		"ts-node": "^10.9.1",
 		"tslib": "^2.4.1",
 		"typescript": "^5.0.4",
-		"vite": "^4.2.0"
-	},
-	"type": "module",
-	"dependencies": {
+		"vite": "^4.2.0",
 		"@prisma/client": "^4.13.0",
 		"bcrypt": "^5.1.0"
-	}
+	},
+	"type": "module"
 }
