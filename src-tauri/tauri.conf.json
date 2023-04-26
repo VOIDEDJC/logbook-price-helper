@@ -30,7 +30,7 @@
 			},
 			"externalBin": [],
 			"icon": ["icons/icon.ico"],
-			"identifier": "logbook-pricing-helper",
+			"identifier": "LogbookPricingHelper",
 			"longDescription": "",
 			"macOS": {
 				"entitlements": null,
