@@ -123,7 +123,7 @@
 
 <div class="content">
 	<div class="input-container">
-		Add or Renew your Session:
+		Create or Renew your Session:
 		<div class="data-div">
 			<label for="accName">Account Name:</label>
 
