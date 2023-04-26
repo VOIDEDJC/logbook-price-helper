@@ -7,8 +7,8 @@
 		"distDir": "../build"
 	},
 	"package": {
-		"productName": "Logbook Pricing Tool",
-		"version": "0.1.0"
+		"productName": "Logbook Pricing Helper",
+		"version": "1.0.0"
 	},
 	"tauri": {
 		"allowlist": {
@@ -30,7 +30,7 @@
 			},
 			"externalBin": [],
 			"icon": ["icons/icon.ico"],
-			"identifier": "com.logbook.tool",
+			"identifier": "logbook-pricing-helper",
 			"longDescription": "",
 			"macOS": {
 				"entitlements": null,
@@ -59,7 +59,7 @@
 				"fullscreen": false,
 				"height": 500,
 				"resizable": true,
-				"title": "Logbook Pricing Tool",
+				"title": "Logbook Pricing Helper",
 				"width": 850
 			}
 		]

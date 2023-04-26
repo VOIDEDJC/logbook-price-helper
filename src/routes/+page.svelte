@@ -140,11 +140,11 @@
 			<input type="text" id="league" name="league" bind:value={league} required />
 		</div>
 		<div class="data-div">
-			<label for="stashIndex">stashIndex:</label>
+			<label for="stashIndex">Stashindex:</label>
 
 			<input type="number" id="stashIndex" name="stashIndex" bind:value={stashIndex} required />
 		</div>
-		<div><button on:click={createSession}>Add or Renew Session</button></div>
+		<div><button on:click={createSession}>Create or Renew Session</button></div>
 		{#if tft}
 			<div class="price-container">
 				Current TFT Prices:

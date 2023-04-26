@@ -1,6 +1,6 @@
 {
-	"name": "sveltekit-tauri",
-	"version": "0.0.1",
+	"name": "poe-logbook-price-helper",
+	"version": "1.0.0",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
