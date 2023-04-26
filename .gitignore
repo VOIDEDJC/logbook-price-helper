@@ -8,7 +8,3 @@ node_modules
 !.env.example
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
-/prisma/dev.sqlite
-/prisma/session.sqlite
-/prisma/migrations
-/prisma/dev.sqlite-journal
