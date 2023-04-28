@@ -8,7 +8,7 @@
 	},
 	"package": {
 		"productName": "Logbook Pricing Helper",
-		"version": "1.0.0"
+		"version": "1.0.1"
 	},
 	"tauri": {
 		"allowlist": {
@@ -59,7 +59,7 @@
 				"fullscreen": false,
 				"height": 500,
 				"resizable": true,
-				"title": "Logbook Pricing Helper",
+				"title": "Logbook Pricing Helper 1.0.1",
 				"width": 850
 			}
 		]
