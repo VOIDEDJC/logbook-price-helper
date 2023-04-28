@@ -20,6 +20,7 @@
 	var league = '';
 	var stashIndex = '';
 
+	// @ts-ignore
 	$: ({ userSession, tft, stashData } = data);
 
 	async function fetchPrices() {
@@ -32,7 +33,6 @@
 	async function createSession() {
 		console.log(accName, sessionID, league, stashIndex);
 		if (accName == '' || sessionID == '' || league == '') {
-			console.log('gfaul');
 		} else {
 			console.log(await store.get('userSession'));
 			await store.set('userSession', {
@@ -92,16 +92,16 @@
 				for (var j = 0; j < item.logbookMods.length; j++) {
 					switch (item.logbookMods[j].faction.name) {
 						case 'Knights of the Sun':
-							bestFaction[0]++;
+							bestFaction[0] = 4;
 							break;
 						case 'Black Scythe Mercenaries':
-							bestFaction[1]++;
+							bestFaction[1] = 3;
 							break;
 						case 'Order of the Chalice':
-							bestFaction[2]++;
+							bestFaction[2] = 2;
 							break;
 						case 'Druids of the Broken Circle':
-							bestFaction[3]++;
+							bestFaction[3] = 1;
 							break;
 					}
 				}
