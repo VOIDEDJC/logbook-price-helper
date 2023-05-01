@@ -1,10 +1,12 @@
 <script lang="ts">
-	import type { PageData } from './$types';
+	//import type { PageData } from './$types';
 	import { fetch } from '@tauri-apps/api/http';
 	import { Store } from 'tauri-plugin-store-api';
 	import { onMount } from 'svelte';
 
-	export let data: PageData;
+	let userSession: any;
+	let tft: any;
+	let stashData: any;
 
 	onMount(() => {
 		fetchPrices();
@@ -19,9 +21,6 @@
 	var sessionID = '';
 	var league = '';
 	var stashIndex = '';
-
-	// @ts-ignore
-	$: ({ userSession, tft, stashData } = data);
 
 	async function fetchPrices() {
 		tft = await fetch(
@@ -106,8 +105,6 @@
 					}
 				}
 				factionCount[bestFaction.indexOf(Math.max(...bestFaction))]++;
-
-				//factionCount[bestFaction.findIndex((count, index) => index !== 0 && count === Math.max(...bestFaction.slice(1)))]++;
 			}
 		}
 
@@ -198,13 +195,6 @@
 </div>
 
 <style>
-	:global(body) {
-		font-family: sans-serif;
-		background-color: #222;
-		display: flex;
-		flex-direction: column;
-		max-width: 500px;
-	}
 	.content {
 		display: flex;
 		flex-direction: row;
@@ -254,26 +244,5 @@
 	label {
 		padding-top: 15px;
 		padding-bottom: 5px;
-	}
-	input {
-		padding: 0.7rem;
-		border: none;
-		border-radius: 4px;
-		background-color: #333;
-		color: #fff;
-	}
-	input:focus {
-		outline: #45a049 solid 1px;
-	}
-	button {
-		background-color: #4caf50;
-		padding: 0.7rem;
-		margin-top: 10px;
-		border: none;
-		font-size: 1.1rem;
-		color: #fff;
-	}
-	button:hover {
-		background-color: #45a049;
 	}
 </style>
