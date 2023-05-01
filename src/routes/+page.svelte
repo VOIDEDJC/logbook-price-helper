@@ -86,7 +86,10 @@
 		let bestFaction;
 		for (var i = 0; i < stashData.data.items.length; i++) {
 			let item = stashData.data.items[i];
-			if (item.baseType.toString() == 'Expedition Logbook') {
+			if (
+				item.baseType.toString() == 'Expedition Logbook' &&
+				(item.corrupted == false || item.corrupted == undefined)
+			) {
 				bestFaction = [0, 0, 0, 0];
 				for (var j = 0; j < item.logbookMods.length; j++) {
 					switch (item.logbookMods[j].faction.name) {
