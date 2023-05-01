@@ -8,6 +8,14 @@ The Logbook-Pricing-Helper is a desktop application for Path of Exile to help yo
 
 Download the latest release at https://github.com/VOIDEDJC/logbook-price-helper/releases/latest
 
+## Planned features
+
+- automatic stash fetching every X minutes
+- ignore corrupted / low ilvl logbooks in the evaluation
+- support tracking multiple stash tabs at once
+- generating a sell message based on your logbooks for use in the TFT discord server
+- (Maybe) support for heist contracts
+
 ## Platform
 
 Currently runs with:
