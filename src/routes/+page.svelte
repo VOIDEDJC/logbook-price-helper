@@ -1,10 +1,11 @@
 <script lang="ts">
-	//import type { PageData } from './$types';
 	import { fetch } from '@tauri-apps/api/http';
-	import { Store } from 'tauri-plugin-store-api';
-	import { onMount } from 'svelte';
+	import { store } from '../lib/store';
 
-	let userSession: any;
+	import { onMount } from 'svelte';
+	import SessionComponent from '../lib/SessionComponent.svelte';
+	import { loadSession, userSession } from '../lib/SessionComponent.svelte';
+
 	let tft: any;
 	let stashData: any;
 
@@ -15,12 +16,6 @@
 			fetchStashData();
 		}, 1000);
 	});
-	const store = new Store('.settings.dat');
-
-	var accName = '';
-	var sessionID = '';
-	var league = '';
-	var stashIndex = '';
 
 	async function fetchPrices() {
 		tft = await fetch(
@@ -29,33 +24,10 @@
 		tft = tft.data;
 	}
 
-	async function createSession() {
-		console.log(accName, sessionID, league, stashIndex);
-		if (accName == '' || sessionID == '' || league == '') {
-		} else {
-			console.log(await store.get('userSession'));
-			await store.set('userSession', {
-				accName: accName,
-				sessionID: sessionID,
-				league: league,
-				stashIndex: stashIndex
-			});
-			await store.save();
-			await loadSession();
-			fetchStashData();
-		}
-	}
-
-	async function loadSession() {
-		userSession = await store.get('userSession');
-		accName = userSession.accName;
-		sessionID = userSession.sessionID;
-		league = userSession.league;
-		stashIndex = userSession.stashIndex;
-	}
 	async function loadStashData() {
 		stashData = await store.get('stashData');
 	}
+
 	async function fetchStashData() {
 		const options = {
 			method: 'GET',
@@ -64,7 +36,7 @@
 			}
 		};
 		const res = await fetch(
-			`https://www.pathofexile.com/character-window/get-stash-items?accountName=${accName}&realm=pc&league=${userSession.league}&tabIndex=${userSession.stashIndex}`,
+			`https://www.pathofexile.com/character-window/get-stash-items?accountName=${userSession.accName}&realm=pc&league=${userSession.league}&tabIndex=${userSession.stashIndex}`,
 			options
 		);
 
@@ -123,28 +95,7 @@
 
 <div class="content">
 	<div class="input-container">
-		Create or Renew your Session:
-		<div class="data-div">
-			<label for="accName">Account Name:</label>
-
-			<input type="text" id="accName" name="accName" bind:value={accName} required />
-		</div>
-		<div class="data-div">
-			<label for="sessionID">SessionID:</label>
-
-			<input type="password" id="sessionID" name="sessionID" bind:value={sessionID} required />
-		</div>
-		<div class="data-div">
-			<label for="league">League:</label>
-
-			<input type="text" id="league" name="league" bind:value={league} required />
-		</div>
-		<div class="data-div">
-			<label for="stashIndex">Stashindex:</label>
-
-			<input type="number" id="stashIndex" name="stashIndex" bind:value={stashIndex} required />
-		</div>
-		<div><button on:click={createSession}>Create or Renew Session</button></div>
+		<SessionComponent />
 		{#if tft}
 			<div class="price-container">
 				Current TFT Prices:
@@ -237,15 +188,5 @@
 		display: flex;
 		flex-direction: column;
 		max-width: 7%;
-	}
-	.data-div {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		margin-top: 10px;
-	}
-	label {
-		padding-top: 15px;
-		padding-bottom: 5px;
 	}
 </style>
