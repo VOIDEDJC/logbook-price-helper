@@ -3,18 +3,17 @@
 	import { store } from '../lib/store';
 
 	import { onMount } from 'svelte';
-	import SessionComponent from '../lib/SessionComponent.svelte';
-	import { loadSession, userSession } from '../lib/SessionComponent.svelte';
-
+	import SessionModule from '../lib/SessionModule.svelte';
+	import { loadSession } from '../lib/SessionModule.svelte';
+	import { userSession } from '../lib/SessionModule.svelte';
 	let tft: any;
 	let stashData: any;
 
-	onMount(() => {
+	onMount(async () => {
 		fetchPrices();
-		loadSession();
-		setTimeout(() => {
-			fetchStashData();
-		}, 1000);
+		await loadSession();
+
+		await fetchStashData();
 	});
 
 	async function fetchPrices() {
@@ -95,7 +94,7 @@
 
 <div class="content">
 	<div class="input-container">
-		<SessionComponent />
+		<SessionModule />
 		{#if tft}
 			<div class="price-container">
 				Current TFT Prices:

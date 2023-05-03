@@ -2,11 +2,10 @@
 	import { store } from './store';
 
 	export let userSession: any;
-
-	export var accName = '';
-	export var sessionID = '';
-	export var league = '';
-	export var stashIndex = '';
+	var accName = '';
+	var sessionID = '';
+	var league = '';
+	var stashIndex = '';
 
 	async function createSession() {
 		console.log(accName, sessionID, league, stashIndex);
@@ -26,12 +25,27 @@
 	}
 
 	export async function loadSession() {
+		console.log('loadSession:');
+
 		userSession = await store.get('userSession');
 		accName = userSession.accName;
 		sessionID = userSession.sessionID;
 		league = userSession.league;
 		stashIndex = userSession.stashIndex;
+
+		console.log(accName, sessionID, league, stashIndex);
 		console.log(userSession);
+		console.log(
+			userSession.accName,
+			userSession.sessionID,
+			userSession.league,
+			userSession.stashIndex
+		);
+	}
+
+	export async function load() {
+		console.log('loading module');
+		await loadSession();
 	}
 </script>
 
