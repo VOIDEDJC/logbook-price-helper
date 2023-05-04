@@ -5,7 +5,6 @@
 	let tft: any;
 
 	export async function fetchPrices() {
-		console.log('Fetching Prices');
 		tft = await fetch(
 			'https://raw.githubusercontent.com/The-Forbidden-Trove/tft-data-prices/master/lsc/bulk-expedition.json'
 		);

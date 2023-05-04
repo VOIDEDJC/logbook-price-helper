@@ -1,4 +1,5 @@
 <script context="module" lang="ts">
+	import { fetchStashData } from './Stash_Module.svelte';
 	import { store } from './store';
 	import { accNameStore, sessionIDStore, leagueStore, stashIndexStore } from './stores.js';
 	let userSession: any;
@@ -22,7 +23,6 @@
 	});
 
 	async function createSession() {
-		console.log(accName, sessionID, league, stashIndex);
 		if (accName == '' || sessionID == '' || league == '') {
 		} else {
 			await store.set('userSession', {
@@ -33,6 +33,7 @@
 			});
 			await store.save();
 			await loadSession();
+			await fetchStashData();
 		}
 	}
 
