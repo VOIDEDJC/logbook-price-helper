@@ -3,26 +3,27 @@
 	import { store } from '../lib/store';
 
 	import { onMount } from 'svelte';
-	import SessionModule, { loadSession } from '../lib/SessionModule.svelte';
-	import { accNameStore, sessionIDStore, leagueStore, stashIndexStore } from '../lib/stores.js';
+	import Session_Module, { loadSession } from '../lib/Session_Module.svelte';
+	import TFT_Module, { fetchPrices } from '../lib/TFT_Module.svelte';
+	import {
+		accNameStore,
+		sessionIDStore,
+		leagueStore,
+		stashIndexStore,
+		sunPriceStore,
+		scythePriceStore,
+		chalicePriceStore,
+		circlePriceStore
+	} from '../lib/stores.js';
 
-	let tft: any;
 	let stashData: any;
 
 	onMount(async () => {
-		fetchPrices();
+		await fetchPrices();
 		await loadSession();
 
 		await fetchStashData();
 	});
-
-	async function fetchPrices() {
-		console.log('Fetching Prices');
-		tft = await fetch(
-			'https://raw.githubusercontent.com/The-Forbidden-Trove/tft-data-prices/master/lsc/bulk-expedition.json'
-		);
-		tft = tft.data;
-	}
 
 	async function loadStashData() {
 		stashData = await store.get('stashData');
@@ -96,29 +97,9 @@
 
 <div class="content">
 	<div class="input-container">
-		<SessionModule />
-		{#if tft}
-			<div class="price-container">
-				Current TFT Prices:
-				<div class="logbook-row">
-					<div>{tft.data[4].name}</div>
-					<div>{tft.data[4].chaos}c</div>
-				</div>
-				<div class="logbook-row">
-					<div>{tft.data[5].name}</div>
-					<div>{tft.data[5].chaos}c</div>
-				</div>
-				<div class="logbook-row">
-					<div>{tft.data[6].name}</div>
+		<Session_Module />
 
-					<div>{tft.data[6].chaos}c</div>
-				</div>
-				<div class="logbook-row">
-					<div>{tft.data[7].name}</div>
-					<div>{tft.data[7].chaos}c</div>
-				</div>
-			</div>
-		{/if}
+		<TFT_Module />
 	</div>
 
 	<div class="logbook-container">
@@ -134,15 +115,15 @@
 		<div class="logbook-col">
 			{#if stashData}
 				Values:
-				<div class="logbook-row">{stashData.sunCount * tft.data[4].chaos}c</div>
-				<div class="logbook-row">{stashData.scytheCount * tft.data[5].chaos}c</div>
-				<div class="logbook-row">{stashData.chaliceCount * tft.data[6].chaos}c</div>
-				<div class="logbook-row">{stashData.circleCount * tft.data[7].chaos}c</div>
+				<div class="logbook-row">{stashData.sunCount * $sunPriceStore}c</div>
+				<div class="logbook-row">{stashData.scytheCount * $scythePriceStore}c</div>
+				<div class="logbook-row">{stashData.chaliceCount * $chalicePriceStore}c</div>
+				<div class="logbook-row">{stashData.circleCount * $circlePriceStore}c</div>
 				<div class="logbook-row total-value-row">
-					Total Value: {stashData.sunCount * tft.data[4].chaos +
-						stashData.scytheCount * tft.data[5].chaos +
-						stashData.chaliceCount * tft.data[6].chaos +
-						stashData.circleCount * tft.data[7].chaos}c
+					Total Value: {stashData.sunCount * $sunPriceStore +
+						stashData.scytheCount * $scythePriceStore +
+						stashData.chaliceCount * $chalicePriceStore +
+						stashData.circleCount * $circlePriceStore}c
 				</div>
 			{/if}
 		</div>
@@ -154,13 +135,6 @@
 		display: flex;
 		flex-direction: row;
 		color: #fff;
-	}
-	.price-container {
-		display: flex;
-		flex-direction: column;
-		padding-top: 30px;
-		max-width: 7%;
-		min-width: 15rem;
 	}
 	.logbook-row {
 		display: flex;

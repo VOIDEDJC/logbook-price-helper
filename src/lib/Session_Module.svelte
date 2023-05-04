@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
 	import { store } from './store';
-	import { accNameStore, sessionIDStore, leagueStore, stashIndexStore } from '../lib/stores.js';
+	import { accNameStore, sessionIDStore, leagueStore, stashIndexStore } from './stores.js';
 	let userSession: any;
 
 	let accName = '';
@@ -25,7 +25,6 @@
 		console.log(accName, sessionID, league, stashIndex);
 		if (accName == '' || sessionID == '' || league == '') {
 		} else {
-			console.log(await store.get('userSession'));
 			await store.set('userSession', {
 				accName: accName,
 				sessionID: sessionID,
