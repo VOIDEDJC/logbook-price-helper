@@ -3,9 +3,9 @@
 	import { store } from '../lib/store';
 
 	import { onMount } from 'svelte';
-	import SessionModule from '../lib/SessionModule.svelte';
-	import { loadSession } from '../lib/SessionModule.svelte';
-	import { userSession } from '../lib/SessionModule.svelte';
+	import SessionModule, { loadSession } from '../lib/SessionModule.svelte';
+	import { accNameStore, sessionIDStore, leagueStore, stashIndexStore } from '../lib/stores.js';
+
 	let tft: any;
 	let stashData: any;
 
@@ -17,6 +17,7 @@
 	});
 
 	async function fetchPrices() {
+		console.log('Fetching Prices');
 		tft = await fetch(
 			'https://raw.githubusercontent.com/The-Forbidden-Trove/tft-data-prices/master/lsc/bulk-expedition.json'
 		);
@@ -28,20 +29,20 @@
 	}
 
 	async function fetchStashData() {
+		console.log('Fetching Stash Data');
 		const options = {
 			method: 'GET',
 			headers: {
-				cookie: `POESESSID=${userSession.sessionID}`
+				cookie: `POESESSID=${$sessionIDStore}`
 			}
 		};
 		const res = await fetch(
-			`https://www.pathofexile.com/character-window/get-stash-items?accountName=${userSession.accName}&realm=pc&league=${userSession.league}&tabIndex=${userSession.stashIndex}`,
+			`https://www.pathofexile.com/character-window/get-stash-items?accountName=${$accNameStore}&realm=pc&league=${$leagueStore}&tabIndex=${$stashIndexStore}`,
 			options
 		);
 
-		console.log(res);
 		if (res.status == 200) {
-			await _storeStashData(res);
+			await storeStashData(res);
 		} else {
 			await store.set('stashData', {
 				sunCount: 0,
@@ -52,7 +53,8 @@
 		}
 		await loadStashData();
 	}
-	async function _storeStashData(stashData: any) {
+
+	async function storeStashData(stashData: any) {
 		let factionCount = [0, 0, 0, 0];
 		let bestFaction;
 		for (var i = 0; i < stashData.data.items.length; i++) {

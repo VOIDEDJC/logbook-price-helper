@@ -1,11 +1,25 @@
 <script context="module" lang="ts">
 	import { store } from './store';
+	import { accNameStore, sessionIDStore, leagueStore, stashIndexStore } from '../lib/stores.js';
+	let userSession: any;
 
-	export let userSession: any;
-	var accName = '';
-	var sessionID = '';
-	var league = '';
-	var stashIndex = '';
+	let accName = '';
+	let sessionID = '';
+	let league = '';
+	let stashIndex = '';
+
+	accNameStore.subscribe((value) => {
+		accName = value;
+	});
+	sessionIDStore.subscribe((value) => {
+		sessionID = value;
+	});
+	leagueStore.subscribe((value) => {
+		league = value;
+	});
+	stashIndexStore.subscribe((value) => {
+		stashIndex = value;
+	});
 
 	async function createSession() {
 		console.log(accName, sessionID, league, stashIndex);
@@ -20,32 +34,15 @@
 			});
 			await store.save();
 			await loadSession();
-			//fetchStashData();
 		}
 	}
 
 	export async function loadSession() {
-		console.log('loadSession:');
-
 		userSession = await store.get('userSession');
-		accName = userSession.accName;
-		sessionID = userSession.sessionID;
-		league = userSession.league;
-		stashIndex = userSession.stashIndex;
-
-		console.log(accName, sessionID, league, stashIndex);
-		console.log(userSession);
-		console.log(
-			userSession.accName,
-			userSession.sessionID,
-			userSession.league,
-			userSession.stashIndex
-		);
-	}
-
-	export async function load() {
-		console.log('loading module');
-		await loadSession();
+		accNameStore.set(userSession.accName);
+		sessionIDStore.set(userSession.sessionID);
+		leagueStore.set(userSession.league);
+		stashIndexStore.set(userSession.stashIndex);
 	}
 </script>
 
@@ -53,22 +50,22 @@ Create or Renew your Session:
 <div class="data-div">
 	<label for="accName">Account Name:</label>
 
-	<input type="text" id="accName" name="accName" bind:value={accName} required />
+	<input type="text" id="accName" name="accName" bind:value={$accNameStore} required />
 </div>
 <div class="data-div">
 	<label for="sessionID">SessionID:</label>
 
-	<input type="password" id="sessionID" name="sessionID" bind:value={sessionID} required />
+	<input type="password" id="sessionID" name="sessionID" bind:value={$sessionIDStore} required />
 </div>
 <div class="data-div">
 	<label for="league">League:</label>
 
-	<input type="text" id="league" name="league" bind:value={league} required />
+	<input type="text" id="league" name="league" bind:value={$leagueStore} required />
 </div>
 <div class="data-div">
 	<label for="stashIndex">Stashindex:</label>
 
-	<input type="number" id="stashIndex" name="stashIndex" bind:value={stashIndex} required />
+	<input type="number" id="stashIndex" name="stashIndex" bind:value={$stashIndexStore} required />
 </div>
 <div><button on:click={createSession}>Create or Renew Session</button></div>
 
