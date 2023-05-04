@@ -52,6 +52,7 @@
 				cookie: `POESESSID=${sessionID}`
 			}
 		};
+
 		const res = await fetch(
 			`https://www.pathofexile.com/character-window/get-stash-items?accountName=${accName}&realm=pc&league=${league}&tabIndex=${stashIndex}`,
 			options

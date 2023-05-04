@@ -63,7 +63,7 @@ Create or Renew your Session:
 	<input type="text" id="league" name="league" bind:value={$leagueStore} required />
 </div>
 <div class="data-div">
-	<label for="stashIndex">Stash Index:</label>
+	<label for="stashIndex">Stash-Index:</label>
 
 	<input type="number" id="stashIndex" name="stashIndex" bind:value={$stashIndexStore} required />
 </div>
