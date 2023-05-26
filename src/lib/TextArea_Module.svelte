@@ -66,7 +66,7 @@
 </script>
 
 <div>
-	<textarea bind:value={$messageStore} />
+	<textarea bind:value={$messageStore} spellcheck="false" />
 </div>
 
 <style>

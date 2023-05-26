@@ -50,7 +50,14 @@ Create or Renew your Session:
 <div class="data-div">
 	<label for="accName">Account Name:</label>
 
-	<input type="text" id="accName" name="accName" bind:value={$accNameStore} required />
+	<input
+		type="text"
+		id="accName"
+		name="accName"
+		bind:value={$accNameStore}
+		required
+		spellcheck="false"
+	/>
 </div>
 <div class="data-div">
 	<label for="sessionID">SessionID:</label>
@@ -60,7 +67,14 @@ Create or Renew your Session:
 <div class="data-div">
 	<label for="league">League:</label>
 
-	<input type="text" id="league" name="league" bind:value={$leagueStore} required />
+	<input
+		type="text"
+		id="league"
+		name="league"
+		bind:value={$leagueStore}
+		required
+		spellcheck="false"
+	/>
 </div>
 <div class="data-div">
 	<label for="stashIndex">Stash-Index:</label>
