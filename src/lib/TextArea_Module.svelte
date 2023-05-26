@@ -46,21 +46,23 @@
 	});
 
 	export function generateMessage() {
-		let message: string = 'WTS Softcore\n';
-		message = message.concat('Logbooks ilvl81+ (non corrupted)\n');
-		if (sunCount > 0) {
-			message = message.concat(sunCount + 'x Sun - ' + sunPrice + 'c each\n');
+		let message: string = '';
+		if (sunCount > 0 || scytheCount > 0 || chaliceCount > 0 || circleCount > 0) {
+			message = message.concat('WTS Softcore\nLogbooks ilvl81+ (non corrupted)\n');
+			if (sunCount > 0) {
+				message = message.concat(`${sunCount} x Sun - ${sunPrice}c each\n`);
+			}
+			if (scytheCount > 0) {
+				message = message.concat(`${scytheCount} x Scythe - ${scythePrice}c each\n`);
+			}
+			if (chaliceCount > 0) {
+				message = message.concat(`${chaliceCount} x Chalice - ${chalicePrice}c each\n`);
+			}
+			if (circleCount > 0) {
+				message = message.concat(`${circleCount} x Circle - ${circlePrice}c each\n`);
+			}
+			message = message.concat('IGN: ');
 		}
-		if (scytheCount > 0) {
-			message = message.concat(scytheCount + 'x Scythe - ' + scythePrice + 'c each\n');
-		}
-		if (chaliceCount > 0) {
-			message = message.concat(chaliceCount + 'x Chalice - ' + chalicePrice + 'c each\n');
-		}
-		if (circleCount > 0) {
-			message = message.concat(circleCount + 'x Circle - ' + circlePrice + 'c each\n');
-		}
-		message = message.concat('IGN: ');
 		messageStore.set(message);
 	}
 </script>
