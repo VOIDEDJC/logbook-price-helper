@@ -1,6 +1,7 @@
 <script context="module" lang="ts">
 	import { fetch } from '@tauri-apps/api/http';
 	import { store } from '../lib/store';
+	import { generateMessage } from './TextArea_Module.svelte';
 
 	import {
 		accNameStore,
@@ -43,6 +44,8 @@
 		scytheCountStore.set(stashData.scytheCount);
 		chaliceCountStore.set(stashData.chaliceCount);
 		circleCountStore.set(stashData.circleCount);
+
+		generateMessage();
 	}
 
 	export async function fetchStashData() {
@@ -78,7 +81,8 @@
 			let item = stashData.data.items[i];
 			if (
 				item.baseType.toString() == 'Expedition Logbook' &&
-				(item.corrupted == false || item.corrupted == undefined)
+				(item.corrupted == false || item.corrupted == undefined) &&
+				item.ilvl > 81
 			) {
 				bestFaction = [0, 0, 0, 0];
 				for (var j = 0; j < item.logbookMods.length; j++) {

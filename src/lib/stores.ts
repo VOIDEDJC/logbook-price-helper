@@ -14,3 +14,5 @@ export let sunCountStore = writable(0);
 export let scytheCountStore = writable(0);
 export let chaliceCountStore = writable(0);
 export let circleCountStore = writable(0);
+
+export let messageStore = writable('');
